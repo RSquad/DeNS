@@ -1,0 +1,8 @@
+node_modules/
+dist/
+
+.env
+bin/
+sbin/
+ton-packages/
+examples/
