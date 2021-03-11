@@ -1,0 +1,6 @@
+TVM linker 0.1.0
+COMMIT_ID: ff05536502a11f7fd63b37928f4e6fd5c0919e58
+BUILD_DATE: 2020-12-27 17:12:02 +0000
+COMMIT_DATE: 2020-12-25 15:38:28 +0300
+GIT_BRANCH: master
+Error: unable to read ABI file: No such file or directory (os error 2)
