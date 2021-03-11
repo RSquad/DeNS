@@ -1,7 +1,7 @@
 {
-  "name": "ft-dens",
+  "name": "DeNS",
   "version": "0.0.1",
-  "description": "",
+  "description": "RSquad - DeNS",
   "main": "index.ts",
   "scripts": {
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --exit -r ts-node/register -r dotenv/config -t 300000 'tests/**/*.test.ts'",
