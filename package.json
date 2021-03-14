@@ -8,8 +8,18 @@
     "compile": "node ./scripts/compile.js",
     "test:compile": "npm run compile && env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha --exit -r ts-node/register -r dotenv/config -t 300000 'tests/**/*.test.ts'"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "author": {
+    "name": "rsquad",
+    "email": "hello@rrstd.ru",
+    "url": "https://rsquad.io"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.2.0",
