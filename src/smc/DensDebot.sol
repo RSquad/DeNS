@@ -171,9 +171,10 @@ contract DensDebot is Debot, Transferable, Upgradable {
     (_regBid.owner,) = stoi(value);
     AmountInput.get(tvm.functionId(askDataForRegister4), "Type amount", 9, 1000000000, 1000000000000000);
   }
-  function askDataForRegister4(int128 value) public {
+  function askDataForRegister4(uint128 value) public {
     uint salt = rnd.next();
     _salt = salt;
+    _amount = value;
     Terminal.print(0, format("Your salt: {} \n REMIND IT!", salt));
     IDensRoot(_addrDensRoot).hashAmountWithSalt{
       abiVer: 2,
@@ -227,7 +228,7 @@ contract DensDebot is Debot, Transferable, Upgradable {
     Terminal.input(tvm.functionId(resolveNameToAddress), "Type name", false);
   }
 
-  function resolveName(string value) public {
+  function resolveName(string value) public view {
     IDensRoot(_addrDensRoot).resolve{
       abiVer: 2,
       extMsg: true,
@@ -239,7 +240,7 @@ contract DensDebot is Debot, Transferable, Upgradable {
     }(value);
   }
 
-  function resolveNameToAddress(string value) public {
+  function resolveNameToAddress(string value) public view {
     IDensRoot(_addrDensRoot).resolve{
       abiVer: 2,
       extMsg: true,
@@ -255,7 +256,7 @@ contract DensDebot is Debot, Transferable, Upgradable {
     Terminal.print(0, format('NIC address: {}', addrNic));
   }
 
-  function getNicWhois(address addrNic) public {
+  function getNicWhois(address addrNic) public pure {
     INic(addrNic).whois{
       abiVer: 2,
       extMsg: true,

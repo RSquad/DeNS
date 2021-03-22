@@ -122,7 +122,7 @@ contract DensRoot is Base, IStoreCallback {
       delete _pendingNics[msg.sender];
   }
 
-  function auctionCompleted(string name, uint expiresAt, uint owner) public {
+  function auctionCompleted(string name, uint expiresAt, uint owner) public view {
     address addrAuction = resolveAuction(name);
     require(msg.sender == addrAuction, 300);
     _deployNic(name, expiresAt, owner);
@@ -182,8 +182,8 @@ contract DensRoot is Base, IStoreCallback {
 
   // test functions
 
-  // function forceRegisterNic(string name, uint owner, uint expiresAt) public view returns (address addrNic) {
-  //   tvm.accept();
-  //   addrNic = _deployNic(name, expiresAt, owner);
-  // }
+  function forceRegisterNic(string name, uint owner, uint expiresAt) public view returns (address addrNic) {
+    tvm.accept();
+    addrNic = _deployNic(name, expiresAt, owner);
+  }
 }

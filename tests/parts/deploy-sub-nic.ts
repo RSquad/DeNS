@@ -34,6 +34,7 @@ export default async (
       name: utf8ToHex(name),
       owner: `0x${smcSafeMultisigWallet.keys.public}`,
     },
+    keys: smcSafeMultisigWallet.keys,
   });
 
   const smcNewNic = new TonContract({

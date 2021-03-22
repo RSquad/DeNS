@@ -95,6 +95,7 @@ contract Auction is Base, IAuction {
         _secondAmount = _maxAmount;
         _maxAmount = amount;
         _leader = addrBid;
+        _leaderOwner = owner;        
       } else if(amount > _secondAmount || _secondAmount == _maxAmount) {
         _secondAmount = amount;
       }
@@ -134,12 +135,12 @@ contract Auction is Base, IAuction {
     });
   }
 
-  // function forceRevealState() public {
-  //   tvm.accept();
-  //   _state = 1;
-  // }
-  // function forceEndState() public {
-  //   tvm.accept();
-  //   _finilize();
-  // }
+  function forceRevealState() public {
+    tvm.accept();
+    _state = 1;
+  }
+  function forceEndState() public {
+    tvm.accept();
+    _finilize();
+  }
 }

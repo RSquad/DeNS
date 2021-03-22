@@ -12,7 +12,7 @@ import './interfaces/IBid.sol';
 // 101 - msg.sender is not deployer
 // 102 - msg.value is lower that amount
 // 103 - auction still ongoing
-// 202 - sender not owner
+// 201 - only inbound messages
 // 202 - hashes don't match
 
 contract Bid is Base, IBid {
