@@ -49,7 +49,7 @@ describe("nic expiring test", () => {
       "google",
       smcDensRoot,
       smcSafeMultisigWallet,
-      Math.round(Date.now() / 1000) + 30
+      Math.round(Date.now() / 1000) + 90
     );
   });
 
@@ -91,11 +91,13 @@ describe("nic expiring test", () => {
     const densRootBalance = await smcDensRoot.getBalance();
     trimlog(`DensRoot balance: ${densRootBalance}`);
 
-    await new Promise((resolve) => setTimeout(resolve, 30000));
-
+    console.log(1, smcNic.address);
     const { _whois } = (await smcNic.run({ functionName: "whois" })).value;
+    console.log(2, smcNic.address);
 
     trimlog(`Nic (google) whois output: ${JSON.stringify(_whois)}`);
+
+    await new Promise((resolve) => setTimeout(resolve, 90000));
 
     await smcNic.call({ functionName: "destruct" });
 
@@ -111,10 +113,6 @@ describe("nic expiring test", () => {
         )}`
       );
     }
-
-    expect(densRootBalance).to.be.lessThan(
-      (await smcDensRoot.getBalance()) as number
-    );
 
     trimlog(`DensRoot balance: ${await smcDensRoot.getBalance()}`);
   });

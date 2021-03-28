@@ -49,6 +49,8 @@ export default async (
     "now aborted"
   );
 
+  await new Promise((resolve) => setTimeout(resolve, 20000));
+
   trimlog(`DensRoot deployed`);
 
   return smcDensRoot;

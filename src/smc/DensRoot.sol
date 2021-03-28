@@ -18,7 +18,7 @@ contract DensRoot is Base, IStoreCallback {
   address _addrStore;
   address _addrAuction;
   mapping(address => RegBid) private _pendingNics;
-  TvmCell _imageNic;
+  TvmCell public _imageNic;
   TvmCell _imageAuction;
   TvmCell _imageBid;
 

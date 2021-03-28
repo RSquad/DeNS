@@ -11,6 +11,7 @@ import deployDensRoot from "./parts/deploy-dens-root";
 import { utf8ToHex, genRandonHex } from "./utils/convert";
 import { expect } from "chai";
 import SafeMultisigWalletPackage from "../ton-packages/SafeMultisigWallet.package";
+import { waitForTransaction } from "./utils/net";
 
 describe("base", () => {
   let client: TonClient;
@@ -81,7 +82,7 @@ describe("base", () => {
         },
       },
     });
-    await smcSafeMultisigWallet.call({
+    const { transaction } = await smcSafeMultisigWallet.call({
       functionName: "sendTransaction",
       input: {
         dest: smcDensRoot.address,
@@ -92,13 +93,22 @@ describe("base", () => {
       },
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 3000));
     const { addrAuction } = (
       await smcDensRoot.run({
         functionName: "resolveAuction",
         input: { name: utf8ToHex("google") },
       })
     ).value;
+
+    await waitForTransaction(
+      client,
+      {
+        account_addr: { eq: addrAuction },
+        now: { ge: transaction.now },
+        aborted: { eq: false },
+      },
+      "now aborted"
+    );
 
     smcAuction = new TonContract({
       client,
@@ -147,7 +157,7 @@ describe("base", () => {
       },
     });
 
-    await smcSafeMultisigWallet.call({
+    const { transaction } = await smcSafeMultisigWallet.call({
       functionName: "sendTransaction",
       input: {
         dest: smcAuction.address,
@@ -164,6 +174,15 @@ describe("base", () => {
         input: { hashAmount: hashAmount2 },
       })
     ).value;
+    await waitForTransaction(
+      client,
+      {
+        account_addr: { eq: addrBid },
+        now: { ge: transaction.now },
+        aborted: { eq: false },
+      },
+      "now aborted"
+    );
 
     smcBid2 = new TonContract({
       client,
@@ -230,7 +249,7 @@ describe("base", () => {
         },
       },
     });
-    await smcSafeMultisigWallet.call({
+    const { transaction } = await smcSafeMultisigWallet.call({
       functionName: "sendTransaction",
       input: {
         dest: smcBid.address,
@@ -240,6 +259,16 @@ describe("base", () => {
         payload: body,
       },
     });
+    await waitForTransaction(
+      client,
+      {
+        account_addr: { eq: smcBid.address },
+        now: { ge: transaction.now },
+        aborted: { eq: false },
+      },
+      "now aborted"
+    );
+
     const _maxAmount = (
       await smcAuction.run({
         functionName: "_maxAmount",
@@ -278,7 +307,7 @@ describe("base", () => {
       },
     });
 
-    await smcSafeMultisigWallet.call({
+    const { transaction } = await smcSafeMultisigWallet.call({
       functionName: "sendTransaction",
       input: {
         dest: smcBid2.address,
@@ -288,7 +317,17 @@ describe("base", () => {
         payload: body2,
       },
     });
-    await smcSafeMultisigWallet.call({
+    await waitForTransaction(
+      client,
+      {
+        account_addr: { eq: smcBid2.address },
+        now: { ge: transaction.now },
+        aborted: { eq: false },
+      },
+      "now aborted"
+    );
+
+    const { transaction: transaction2 } = await smcSafeMultisigWallet.call({
       functionName: "sendTransaction",
       input: {
         dest: smcBid.address,
@@ -298,6 +337,15 @@ describe("base", () => {
         payload: body,
       },
     });
+    await waitForTransaction(
+      client,
+      {
+        account_addr: { eq: smcBid.address },
+        now: { ge: transaction2.now },
+        aborted: { eq: false },
+      },
+      "now aborted"
+    );
     console.log(
       await smcAuction.run({
         functionName: "_maxAmount",

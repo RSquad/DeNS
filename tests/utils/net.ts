@@ -8,7 +8,7 @@ export const waitForTransaction = async (
       collection: "transactions",
       filter: filter,
       result: fields,
-      timeout: 10000,
+      timeout: 60000,
     });
     return result;
   } catch (err) {

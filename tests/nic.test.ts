@@ -1,7 +1,6 @@
 import { TonClient } from "@tonclient/core";
 import { createClient } from "./utils/client";
 import TonContract from "./ton-contract";
-import pkgNIC from "../ton-packages/NIC.package";
 import pkgNSEGiver from "../ton-packages/NSEGiver.package";
 import deployMultisig from "./parts/deploy-multisig";
 import deployDensRoot from "./parts/deploy-dens-root";
@@ -44,6 +43,7 @@ describe("nic and subnics test", () => {
 
   it("deploy DensRoot", async () => {
     smcDensRoot = await deployDensRoot(client, smcNSEGiver, smcStore);
+    await new Promise((resolve) => setTimeout(resolve, 20000));
   });
 
   it("deploy Nic, domain - google", async () => {

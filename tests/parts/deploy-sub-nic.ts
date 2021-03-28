@@ -50,7 +50,7 @@ export default async (
   await waitForTransaction(
     client,
     {
-      account_addr: { eq: smcNic.address },
+      account_addr: { eq: smcNewNic.address },
       now: { ge: transaction.now },
       aborted: { eq: false },
     },
